@@ -21,8 +21,6 @@ class TweetBot:
         self.execute()
     
     def execute(self):
-        self.postMessage(True)
-
         now = datetime.now()
         if now.hour == 10:
             self.postMessage(True)
