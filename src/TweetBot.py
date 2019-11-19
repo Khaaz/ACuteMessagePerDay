@@ -1,25 +1,36 @@
 import time
 from datetime import datetime
+from Parser import Parser
 from SentenceManager import SentenceManager
 
 class TweetBot:
-    def __init__(self, api):
+    api = None
+    parser = None
+    love_sentenceManager = None
+    toMention = None
+
+    def __init__(self, api, mention):
         self.api = api
-        self.sentenceManager = SentenceManager('configs/sentences.json')
+        self.toMention = mention
+        
+        self.parser = Parser()
+        
+        self.love_sentenceManager = SentenceManager('configs/love_sentences.json', self.parser)
         
     def start(self):
         self.execute()
     
     def execute(self):
+        self.postMessage(True)
+
         now = datetime.now()
         if now.hour == 10:
             self.postMessage(True)
-        if now.hour == 19:
-            self.postMessage(False)
         
-        time.sleep(45 * 60)
+        time.sleep(45 * 60) # sleep 45 min
         self.execute()
 
     def postMessage(self, mention):
-        self.api.update_status(self.sentenceManager.get() + ' @louisonb_' if mention else '')
+        print(datetime.now().strftime("%Y-%m-%d %H:%M:%S") + ': Posting...')
+        self.api.update_status(self.love_sentenceManager.get() + ((' @' + self.toMention) if mention else ''))
 

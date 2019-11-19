@@ -9,15 +9,14 @@ configs = {}
 with open('configs/config.json', 'r') as f:
     configs = json.load(f)
 
-for distro in configs:
-    print(distro)
-    print(configs[distro])
-
 # login to twitter account api
+print('Load KEYS...')
 auth = tp.OAuthHandler(configs['consumer_key'], configs['consumer_secret'])
 auth.set_access_token(configs['access_token'], configs['access_secret'])
 api = tp.API(auth)
 
-Bot = TweetBot(api)
+print('Instanciate Bot...')
+Bot = TweetBot(api, configs['mention'])
 
+print('Start Bot...')
 Bot.start()
