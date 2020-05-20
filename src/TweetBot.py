@@ -25,7 +25,7 @@ class TweetBot:
         if now.hour == 10:
             self.postMessage(True)
         
-        time.sleep(45 * 60) # sleep 45 min
+        time.sleep(55 * 60) # sleep 55 min
         self.execute()
 
     def postMessage(self, mention):
